@@ -1,8 +1,9 @@
 import express from "express";
-import articles from "./routes/articles";
+// file extensions required for ESM
+import articles from "./routes/articles.js";
 
 const app = express();
 
 app.use("/articles", articles);
 
-app.listen(3000, () => console.log("listening on port 3000"));
+app.listen(5500, () => console.log("listening on port 5500"));
