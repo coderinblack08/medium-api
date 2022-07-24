@@ -23,8 +23,16 @@
 - `/articles/trending`: Scrapes the trending articles on medium's home page.
 - `/authors/:author`: Returns information and recent articles from the author.
 
+Test it out by using CURL, Postman, or any language of your choosing!
+
 ## Deployment
 
 The website is deployed on Railway. No environment variables need ot be set.
 
+https://medium-api-production.up.railway.app
+
 ## Video Demo
+
+Explanation of how everything works and the limitations of building said API.
+
+https://vimeo.com/732842471

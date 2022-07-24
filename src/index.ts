@@ -5,8 +5,12 @@ import authors from "./routes/authors.js";
 import topics from "./routes/topics.js";
 import puppeteer from "puppeteer";
 import fs from "fs";
+import helmet from "helmet";
+import cors from "cors";
 
 const app = express();
+app.use(helmet());
+app.use(cors({ origin: "*" }));
 
 async function fetchTopics(limit: number) {
   if (fs.existsSync("./topics.json")) return;
