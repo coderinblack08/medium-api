@@ -43,12 +43,12 @@ articles.get("/trending", async (_, res) => {
     /**
      * @deprecated
      */
-    function getMetadata(div: ChildNode) {
-      const $$ = cheerio.load($.html(div));
-      const publishedDate = $$("div > span:nth-child(1)").text();
-      const readingTime = $$("div > .pw-reading-time").text();
-      return { publishedDate, readingTime };
-    }
+    // function getMetadata(div: ChildNode) {
+    //   const $$ = cheerio.load($.html(div));
+    //   const publishedDate = $$("div > span:nth-child(1)").text();
+    //   const readingTime = $$("div > .pw-reading-time").text();
+    //   return { publishedDate, readingTime };
+    // }
 
     const titleContent = cheerio.load($.html(title))("a > div > h2").text();
 
