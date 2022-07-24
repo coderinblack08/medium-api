@@ -37,6 +37,10 @@ async function fetchTopics(limit: number) {
       elements.forEach(
         (element) => element.textContent && data.push(element.textContent)
       );
+      const next_page: any = document.querySelector(
+        "button.cp.cq.aw.ax.ay.az.ba.bb.bc.bd.cr.cs.bg.ct.cu"
+      );
+      if (next_page) next_page.click();
       return data;
     });
   }
@@ -46,10 +50,6 @@ async function fetchTopics(limit: number) {
     console.log("Scraped tags: " + index);
     await page.waitForTimeout(200);
     results = await extractTopics();
-    await page.waitForSelector(
-      "button.cp.cq.aw.ax.ay.az.ba.bb.bc.bd.cr.cs.bg.ct.cu"
-    );
-    await page.click("button.cp.cq.aw.ax.ay.az.ba.bb.bc.bd.cr.cs.bg.ct.cu");
   }
 
   // await page.screenshot({
@@ -61,7 +61,7 @@ async function fetchTopics(limit: number) {
   browser.close();
 }
 
-fetchTopics(20);
+fetchTopics(20).catch(console.error);
 
 app.use("/articles", articles);
 app.use("/topics", topics);
