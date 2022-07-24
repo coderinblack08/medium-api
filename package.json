@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
     "dev": "nodemon --exec \"node dist/index.js\"",
     "watch": "tsc -w"
   },

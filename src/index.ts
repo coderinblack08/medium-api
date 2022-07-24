@@ -67,4 +67,6 @@ app.use("/articles", articles);
 app.use("/topics", topics);
 app.use("/authors", authors);
 
-app.listen(5500, () => console.log("listening on port 5500"));
+app.listen(process.env.PORT || 5500, () =>
+  console.log("listening on port 5500")
+);
