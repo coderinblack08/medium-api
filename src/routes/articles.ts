@@ -1,16 +1,19 @@
 import cheerio from "cheerio";
+import type { ChildNode } from "domhandler";
 import { Router } from "express";
 import fetch from "node-fetch";
-import type { ChildNode } from "domhandler";
 
 const articles = Router();
+
+// medium provides no RSS feed
+// so let's manually scrape for trending articles
 
 articles.get("/trending", async (_, res) => {
   const page = await fetch("https://medium.com");
   const $ = cheerio.load(await page.text());
   const response = [];
   for (const post of $(".pw-trending-post > div:nth-child(2)")) {
-    const [author, title, metadata] = post.children;
+    const [author, title, _metadata] = post.children;
 
     function getAuthor(div: ChildNode) {
       const $$ = cheerio.load($.html(div));
@@ -37,12 +40,15 @@ articles.get("/trending", async (_, res) => {
       return { username, displayName, publication };
     }
 
-    // function getMetadata(div: ChildNode) {
-    //   const $$ = cheerio.load($.html(div));
-    //   const publishedDate = $$("div > span:nth-child(1)").text();
-    //   const readingTime = $$("div > .pw-reading-time").text();
-    //   return { publishedDate, readingTime };
-    // }
+    /**
+     * @deprecated
+     */
+    function getMetadata(div: ChildNode) {
+      const $$ = cheerio.load($.html(div));
+      const publishedDate = $$("div > span:nth-child(1)").text();
+      const readingTime = $$("div > .pw-reading-time").text();
+      return { publishedDate, readingTime };
+    }
 
     const titleContent = cheerio.load($.html(title))("a > div > h2").text();
 
@@ -56,15 +62,14 @@ articles.get("/trending", async (_, res) => {
       url,
       title: titleContent,
       author: getAuthor(author),
+
       // medium broken when using a fetch request
+      // for additional metadata, query the article route separately
+
       // metadata: getMetadata(metadata),
     });
   }
   res.json(response);
 });
-
-articles.get("/author/:author", async (req, res) => {});
-
-articles.get("/topic/:topic", async (req, res) => {});
 
 export default articles;
